@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<meta name="description" content="Leah's blog">
+<meta name="author" content="Leonora Der">
+<link rel="shortcut icon" href="favicon2.ico" type="image/x-icon">
+<link rel="icon" href="favicon2.ico" type="image/x-icon">
+<title> 
+Leah's Lab - Blog
+</title>
+<style>
+body {
+	font-family: "Trebuchet MS", Helvetica, sans-serif ;
+	background-color: rgba(200, 255, 255, 0.9);
+    background-image: url("drawing.svg");
+	background-repeat: repeat;
+	background-attachment: fixed;
+    background-position: center; 
+	background-size: 150%;
+}
+#base {
+    padding: 5px 40px;  
+	background-color: rgba(60, 230, 240, 0.9);
+    width: 80%;
+    border-radius: 15px;
+	margin-left: auto;
+    margin-right: auto;
+	border-style: dashed;
+    border-width: 5px;
+	background-image: url("leah.jpg");
+	background-repeat: no-repeat;
+    background-position: right top;
+	background-size:9%;
+	overflow: hidden;
+}
+#header{
+	padding-right: 100px;
+	padding-top:0px;
+	padding-bottom:	0px;
+	margin-bottom:0px;
+	margin-top:0px;
+	text-align:right;
+}
+h4 {
+	padding-right: 100px;
+	padding-top:10px;
+	padding-bottom:	0px;
+	margin-bottom:0px;
+	margin-top:0px;
+	text-align:right;
+}
+h1{
+	font-size: 300%;
+	margin: 5 px 20px;
+	float: left;
+}
+h1.padding {
+    padding-top: 5px;
+    padding-right: 5px;
+    padding-bottom: 5px;
+    padding-left: 5px;
+}
+#disqus_thread {
+	padding: 5px 40px;  
+	background-color: rgba(210, 255, 255, 0.9);
+    width: 80%;
+    border-radius: 15px;
+	margin-left: auto;
+    margin-right: auto;
+	overflow:hidden;
+}
+a {
+text-decoration: none;
+}
+a:link {
+    color: #000000;
+}
+a:visited {
+    color: #000000;
+}
+a:hover {
+    color: #005AC8;
+}
+a:active {
+    color: #005AC8;
+}
+#lap {
+	border-radius: 15px;
+	overflow:hidden;
+	margin-left: auto;
+    margin-right: auto;
+	margin-top:5px;
+	margin-bottom:5px;
+	width:80%;
+}
+#side {
+	float:left;
+	overflow:hidden;
+	width:30%;
+	background-color: rgba(150, 255, 255, 0.9);
+	padding:5px 0px 5px 10px;
+	margin:3px;
+	border-radius:15px;
+}
+#content{
+	float:left;
+	overflow:hidden;
+	width:66%;
+	background-color: rgba(190,255,255,0.9);
+	padding:5px;
+	margin:5px;
+	border-radius:15px;
+}
+#title {
+	background-color: rgba(230,255,255,0.9);
+	padding: 1px 1px 1px 15px;
+	border-radius:15px;
+}
+h3 {
+	font-size: 150%;
+}
+</style>
+</head>
+ <script type="text/javascript">
+	var h = document.getElementById("lap").clientHeight;
+	document.getElementById("side").style.height=(h)+'px';
+	document.getElementById("content").style.height=(h)+'px';
+	
+	function textClick(text) {
+		document.getElementById("title").innerHTML = "<h3>"+text+"</h3>";
+		document.getElementById("iframe1").src="http://leahnori.github.io/b"+this.id+".html";	
+	}
+</script>
+<body>
+<div id="base">
+<h1><span>Leah's blog</span></h1>
+<p id="header"><h4>Leonora Der - Leah</h4></p>
+<p id="header"><a href="http://leahnori.github.io">Back to Leah's Lab</a></p>
+<p id="header">...and this is my blog!</p>
+<p id="header"><a href="mailto:leahnori@gmail.com?Subject=Mail%20to%20Leah">Send me an e-mail!</a></p>
+<p id="header">opt.res.: 1366x768</p>
+ </div>
+
+<div id="lap">
+ <div id="side">
+	<div id="0" onclick="textClick(document.getElementById(this.id).innerHTML);document.getElementById(this.id).style.color='#005AC8'">Starting blog...</div>
+	<!--div id="1" onclick="textClick(document.getElementById(this.id).innerHTML);document.getElementById(this.id).style.color='#005AC8'">About life</div-->
+	</div>
+ <div id="content">
+	<div id="title" ><h3>My blog</h3></div>
+	<div id="text">
+	<iframe src="b.html" width=100% height=1000px frameBorder="0" id="iframe1" >Browser not compatible.</iframe>
+	</div>
+ </div>
+</div>
+
+</body>
+</html>
