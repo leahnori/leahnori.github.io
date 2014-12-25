@@ -127,9 +127,10 @@ h3 {
 	document.getElementById("side").style.height=(h)+'px';
 	document.getElementById("content").style.height=(h)+'px';
 	
-	function textClick(text) {
+	function textClick(text,num) {
 		document.getElementById("title").innerHTML = "<h3>"+text+"</h3>";
-		document.getElementById("iframe1").src="http://leahnori.github.io/b"+this.id+".html";	
+		document.getElementById("iframe1").src="http://leahnori.github.io/b"+num+".html";	
+		//document.write(document.getElementById("iframe1").src);
 	}
 </script>
 <body>
@@ -144,7 +145,7 @@ h3 {
 
 <div id="lap">
  <div id="side">
-	<div id="0" onclick="textClick(document.getElementById(this.id).innerHTML);document.getElementById(this.id).style.color='#005AC8'">Starting blog...</div>
+	<div id="0" onclick="textClick(document.getElementById(this.id).innerHTML,this.id);document.getElementById(this.id).style.color='#005AC8'">Starting blog...</div>
 	<!--div id="1" onclick="textClick(document.getElementById(this.id).innerHTML);document.getElementById(this.id).style.color='#005AC8'">About life</div-->
 	</div>
  <div id="content">
