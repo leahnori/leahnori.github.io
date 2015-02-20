@@ -1,194 +1,762 @@
 <html>
-<head>
+    <head>
+        <link rel="stylesheet" type="text/css" href="ranPic.css" />
+    </head>
+    <body>
+        <div id="wrapper" >
+            <p id="p">ranPic</p>
+        </div>
+        <div id="menu">
+            <span><input id="b" type="button" value="stats" onClick="change('fig');"></span>
+            <span><input id="b" type="button" value="input" onClick="change('in');"></span>  <!--both from textarea, file and tweet-->
+            <span><input id="b" type="button" value="set" onClick="change('set');"></span> 
+            <span><input id="b" type="button" value="info" onClick="change('info');"></span> 
+        </div>
 
-<style >
-body {
-font-family: "Courier New";
-}
+        <div id="rand" >
+            <canvas id="canvas" width="256" height="256" onClick="mi();">random Canvas</canvas> <!--location.reload()-->
+        </div>
 
-p {
-font-size:300%;
-padding:10px;
-font-weight:bold;
-margin:5px;
-}
+        <div id="fig"></div>
 
-#wrapper, #ind {
-width:90%;
-background-color:#FFFFFF;
-margin-right:auto;
-margin-left:auto;
-text-align:center;
-margin-top:5px;
-margin-bottom:5px;
-font-size:x-large;
-font-weight:bold;
-padding:5px;
-}
+        <div id="info">
+            <p>version 1.0</p>
+            <p>made by Leah Der</p>
+            <p>_ _ _ _ _</p>
+            <p style="font-size: smaller">leahnori@gmail.com</p>
+            <p style="font-size: smaller">leahnori.github.io</p>
+        </div>
 
-#canvas {
-padding:10px;
-}
+        <div id="in">
+            <div id="rules"></div>
+            <textarea id="text" placeholder="put here the code! :)" rows=8 ></textarea>
+            <input id="b" type="button" value="visualize!" onClick="visualize();">
 
-#b {
-	background-color:#ffffff;
-	display:inline-block;
-	cursor:pointer;
-	color:#000000;
-	font-family:Courier New;
-	font-size:xx-large;
-	width:100%;
-	font-weight:bold;
-	text-decoration:none;
-	border: none;
-	outline:none;
-	padding:5px;
-}
-</style>
-</head>
+        </div>
 
-<body>
-<div id="wrapper" > 
-<p>ranPic</p>
-</div>
+        <div id="vica">
+            <canvas id="vican" width="256" height="256" >visualized canvas</canvas>
+        </div>	
 
-<div id="wrapper" > 
-<canvas id="canvas" width="256", height="256">
-Random Canvas
-</canvas>
-</div>
+        <div id="set">
+            <div id="part">mode</div>
+            <form name="mode">
+                <input type="radio" id="m1" name="color" checked><label>black and white</label>
+                <br>
+                <input type="radio" id="m2" name="color"><label>colorful</label>
+            </form>
+            <div id="part">mirror</div>
+            <form name="mode">
+                <input type="radio" id="t1" name="color" checked><label>no mirror</label>
+                <br>
+                <input type="radio" id="t2" name="color"><label>mirror +</label>
+                <br>
+            </form>
+            <div id="part">size</div>
+            <form name="size">
+                <input type="radio" id="s0" name="color"><label>1x1</label>
+                <br>
+                <input type="radio" id="s1" name="color"><label>2x2</label>
+                <br>
+                <input type="radio" id="s2" name="color"><label>4x4</label>
+                <br>
+                <input type="radio" id="s3" name="color"checked><label>8x8</label>
+                <br>
+                <input type="radio" id="s4" name="color"><label for=>16x16</label>
+                <br>
+            </form>
+            <div id="part" onClick="mi();
+                    back();">SET</div>
+        </div>
 
-<div id="wrapper" > 
-<input id="b" type="button" value="randAgain" onClick="location.reload()">
-</div>
+        <div id="back">
+            <span><input id="b" type="button" value="back" onClick="back();"></span>
+        </div>
 
-<div id="ind" > 
-</div>
-
-<div style="text-align:center">
-<a class="twitter-share-button"
-  href="https://twitter.com/share"
-  data-via="ranPicpat">
-Share pattern!
-</a>
-<script>
-window.twttr=(function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],t=window.twttr||{};if(d.getElementById(id))return;js=d.createElement(s);js.id=id;js.src="https://platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);t._e=[];t.ready=function(f){t._e.push(f);};return t;}(document,"script","twitter-wjs"));
-</script>
-</div>
-
-<!--zoom*prop= width/height - 8*8 pixel-->
-<!--zoom*16= width/height - 16*16 pixel-->
-
-<!--button id="create">Create file</button> 
-<a download="info.txt" id="downloadlink" style="display: none">Download</a>
-</a-->
+        <div id="twitter" style="text-align:center">
+            <a class="twitter-share-button" href="https://twitter.com/share" data-via="ranPicpat"></a>
+        </div>			
+    </body>
+</html>
 
 <script type="text/javascript">
 
-var zoom=32;
-var prop=8;
+                function mi() {
+                    window.onLoad = rand();
+                }
 
-function setPixel(imageData, x, y, r, g, b, a) {
-    index = (x + y * imageData.width) * 4;
-    imageData.data[index+0] = r;
-    imageData.data[index+1] = g;
-    imageData.data[index+2] = b;
-    imageData.data[index+3] = a;
-}
-rand();
-function rand() {
+                var color = 0;
+                var zoom = 0;
+                var prop = 0;
 
-//random background
-document.body.style.background='#'+Math.floor(Math.random()*16777215).toString(16);
+                var current = ""; //current site
+                var code = ""; //for the textfile
 
-element = document.getElementById("canvas");
-c = element.getContext("2d");
+                function setPixel(imageData, x, y, r, g, b, a) {
+                    index = (x + y * imageData.width) * 4;
+                    imageData.data[index + 0] = r;
+                    imageData.data[index + 1] = g;
+                    imageData.data[index + 2] = b;
+                    imageData.data[index + 3] = a;
+                }
+                rand();
 
-// read the width and height of the canvas
-width = element.width;
-height = element.height;
+                function rand() {
 
-// create a new pixel array
-imageData = c.createImageData(width, height);
-var m=0;
-var bigIndex=[];
-// draw random dots
-for(var x=0;x<width;x=x+zoom) {
-	var smIndex=[];
-	for(var y=0;y<height;y=y+zoom) {
-		s = Math.floor(Math.random() * 2 );
-		m=m+s;
-		var dot=1;
-		if(s===0) {
-			r = 0;
-			g = 0;
-			b = 0;
-		} else {
-			r = 255;
-			g = 255;
-			b = 255;
-			dot=0;
-		}
-		//document.write(dot);
-		smIndex[smIndex.length]=dot;
-		for( var a=0;a<zoom;a++) {
-			for(var e=0;e<zoom;e++ ) {
-				setPixel(imageData, y+a, x+e, r, g, b, 255); // 255 opaque
-			}
-		}
-		
-	}
-	//document.write(smIndex);
-	//document.writeln();
-	bigIndex[bigIndex.length]=smIndex;
-}
+                    var bigIndex = [];
+                    //size
+                    if (document.getElementById("s0").checked) {
+                        zoom = 256;
+                        prop = 1;
+                    }
+                    if (document.getElementById("s1").checked) {
+                        zoom = 128;
+                        prop = 2;
+                    }
+                    if (document.getElementById("s2").checked) {
+                        zoom = 64;
+                        prop = 4;
+                    }
+                    if (document.getElementById("s3").checked) {
+                        zoom = 32;
+                        prop = 8;
+                    }
+                    if (document.getElementById("s4").checked) {
+                        zoom = 16;
+                        prop = 16;
+                    }
 
-//document.writeln(bigIndex);
-for(var q=0;q<prop;q++) {
-	for(var r=0;r<prop;r++) {
-		document.getElementById('ind').innerHTML += bigIndex[q][r]+' ';
-		document.title += bigIndex[q][r];
-	}
-	document.getElementById('ind').innerHTML += '<br>'; 
-}
+                    //color
+                    var col = 0;
+                    if (document.getElementById("m1").checked) {
+                        col = 0;
+                        document.getElementById("rules").innerHTML = "0 - white   1 - black";
+                    }
+                    if (document.getElementById("m2").checked) {
+                        col = 1;
+                        document.getElementById("rules").innerHTML = "0 - white   1 - black <br> 2 - yellow   3 - orange <br> 4 - red   5 - pink <br> 6 - brown   7 - blue <br> 8 - green   9 - grey";
 
-document.title+=" Random images";
-//document.write(m); //number of black pieces
+                    }
+
+                    document.title = " ";
+                    document.title += " Random images";
+                    document.getElementById('fig').innerHTML = "";
+                    //body color
+                    var color = Math.floor(Math.random() * 16777215).toString(16);
+                    while (color.length < 6) {
+                        color = Math.floor(Math.random() * 16777215).toString(16);
+                    }
+                    document.body.style.background = '#' + color;
+                    //pic
+                    element = document.getElementById("canvas");
+                    c = element.getContext("2d");
+
+                    width = element.width;
+                    height = element.height;
+
+                    imageData = c.createImageData(width, height);
+
+                    if (col === 0) { //black and white
+                        var r = 0;
+                        var g = 0;
+                        var b = 0;
+                        var s = 0;
+                        document.getElementById('fig').innerHTML = "";
+
+                        if (document.getElementById("t1").checked) { //no mirror
+                            for (var x = 0; x < width; x = x + zoom) {
+                                var smIndex = [];
+                                for (var y = 0; y < height; y = y + zoom) {
+                                    s = Math.floor(Math.random() * 2);
+                                    var dot = 1;
+                                    if (s === 0) {
+                                        r = 0;
+                                        g = 0;
+                                        b = 0;
+                                    } else {
+                                        r = 255;
+                                        g = 255;
+                                        b = 255;
+                                        dot = 0;
+                                    }
+                                    smIndex[smIndex.length] = dot;
+                                    for (var a = 0; a < zoom; a++) {
+                                        for (var e = 0; e < zoom; e++) {
+                                            setPixel(imageData, y + a, x + e, r, g, b, 255); // 255 opaque
+                                        }
+                                    }
+                                }
+                                bigIndex[bigIndex.length] = smIndex;
+                            }
+                        } else if (document.getElementById("t2").checked) { //mirror
+                            var partIndex = [];
+                            for (var x = 0; x < width / 2; x = x + zoom) {
+                                for (var y = 0; y < height / 2; y = y + zoom) {
+                                    s = Math.floor(Math.random() * 2);
+                                    var dot = 1;
+                                    if (s === 0) {
+                                        r = 0;
+                                        g = 0;
+                                        b = 0;
+                                    } else {
+                                        r = 255;
+                                        g = 255;
+                                        b = 255;
+                                        dot = 0;
+                                    }
+                                    partIndex[partIndex.length] = dot;
+                                }
+                            }
+                            var smIndex = [];
+
+                            for (var k = 0; k < prop; k++) {
+                                smIndex = [];
+                                for (var l = 0; l < prop; l++) {
+                                    if (l < prop / 2 && k < prop / 2) {
+                                        smIndex[smIndex.length] = partIndex[l * prop / 2 + k];
+                                    }
+                                    if (l < prop / 2 && k >= prop / 2) {
+                                        smIndex[smIndex.length] = partIndex[l * prop / 2 + (prop - k - 1)];
+                                    }
+                                    if (l >= prop / 2 && k < prop / 2) {
+                                        smIndex[smIndex.length] = partIndex[(prop - l - 1) * prop / 2 + k];
+                                    }
+                                    if (l >= prop / 2 && k >= prop / 2) {
+                                        smIndex[smIndex.length] = partIndex[(prop - l - 1) * prop / 2 + (prop - k - 1)];
+                                    }
+                                }
+                                bigIndex[bigIndex.length] = smIndex;
+                            }
+                            for (var d = 0; d < prop / 2; d++) {
+                                for (var u = 0; u < prop / 2; u++) {
+                                    for (var a = 0; a < zoom; a++) {
+                                        for (var e = 0; e < zoom; e++)
+                                            if (partIndex[d * (prop / 2) + u] === 1) {
+                                                setPixel(imageData, d * zoom + a, u * zoom + e, 0, 0, 0, 255); // 255 opaque
+                                            } else {
+                                                setPixel(imageData, d * zoom + a, u * zoom + e, 255, 255, 255, 255); // 255 opaque
+                                            }
+                                    }
+                                }
+                            }
+                            for (var d = 0; d < prop / 2; d++) {
+                                for (var u = prop - 1; u >= prop / 2; u--) {
+                                    for (var a = 0; a < zoom; a++) {
+                                        for (var e = 0; e < zoom; e++)
+                                            if (partIndex[d * (prop / 2) + (prop - u - 1)] === 1) {
+                                                setPixel(imageData, d * zoom + a, u * zoom + e, 0, 0, 0, 255); // 255 opaque
+                                            } else {
+                                                setPixel(imageData, d * zoom + a, u * zoom + e, 255, 255, 255, 255); // 255 opaque
+                                            }
+                                    }
+                                }
+                            }
+                            for (var d = prop - 1; d >= prop / 2; d--) {
+                                for (var u = 0; u < prop / 2; u++) {
+                                    for (var a = 0; a < zoom; a++) {
+                                        for (var e = 0; e < zoom; e++)
+                                            if (partIndex[(prop - d - 1) * (prop / 2) + u] === 1) {
+                                                setPixel(imageData, d * zoom + a, u * zoom + e, 0, 0, 0, 255); // 255 opaque
+                                            } else {
+                                                setPixel(imageData, d * zoom + a, u * zoom + e, 255, 255, 255, 255); // 255 opaque
+                                            }
+                                    }
+                                }
+                            }
+                            for (var d = prop - 1; d >= prop / 2; d--) {
+                                for (var u = prop - 1; u >= prop / 2; u--) {
+                                    for (var a = 0; a < zoom; a++) {
+                                        for (var e = 0; e < zoom; e++)
+                                            if (partIndex[(prop - d - 1) * (prop / 2) + (prop - u - 1)] === 1) {
+                                                setPixel(imageData, d * zoom + a, u * zoom + e, 0, 0, 0, 255); // 255 opaque
+                                            } else {
+                                                setPixel(imageData, d * zoom + a, u * zoom + e, 255, 255, 255, 255); // 255 opaque
+                                            }
+                                    }
+                                }
+                            }
+                        }
+                        if (prop <= 10) {
+                            for (var q = 0; q < prop; q++) {
+                                for (var z = 0; z < prop; z++) {
+                                    document.title += bigIndex[q][z];
+                                }
+                            }
+                        }
+
+                        c.putImageData(imageData, 0, 0);
+
+                        //stat
+                        var blapie = 0;
+                        var horlinbla = 0;
+                        var verlinbla = 0;
+                        var horlinwhi = 0;
+                        var verlinwhi = 0;
+                        var blacross = 0;
+                        var whitecross = 0;
+                        var blacksquare = 0;
+                        var whitesquare = 0;
+                        var maxbla = 0;
+                        var maxwhi = 0;
+
+                        for (var i = 0; i < prop; i++) {
+                            for (var j = 0; j < prop; j++) {
+                                if (bigIndex[i][j] === 1) {
+                                    blapie++;
+                                }
+                            }
+                        }
+
+                        for (var q = 0; q < prop; q++) {
+                            var w = 0;
+                            for (var r = 0; r < prop; r++) {
+                                if (bigIndex[q][r] === 1) {
+                                    w++;
+                                }
+                            }
+                            if (w === prop) {
+                                horlinbla++;
+                            }
+                        }
+                        for (var r = 0; r < prop; r++) {
+                            var w = 0;
+                            for (var q = 0; q < prop; q++) {
+                                if (bigIndex[q][r] === 1) {
+                                    w++;
+                                }
+                            }
+                            if (w === prop) {
+                                verlinbla++;
+                            }
+                        }
+                        for (var q = 0; q < prop; q++) {
+                            var w = 0;
+                            for (var r = 0; r < prop; r++) {
+                                if (bigIndex[q][r] === 0) {
+                                    w++;
+                                }
+                            }
+                            if (w === prop) {
+                                horlinwhi++;
+                            }
+                        }
+                        for (var r = 0; r < prop; r++) {
+                            var w = 0;
+                            for (var q = 0; q < prop; q++) {
+                                if (bigIndex[q][r] === 0) {
+                                    w++;
+                                }
+                            }
+                            if (w === prop) {
+                                verlinwhi++;
+                            }
+                        }
+
+                        for (var i = 0; i <= prop - 3; i++) {
+                            for (var j = 0; j <= prop - 3; j++) {
+                                if (bigIndex[j][i] === 0 && bigIndex[j][i + 1] === 1 && bigIndex[j][i + 2] === 0 &&
+                                        bigIndex[j + 1][i] === 1 && bigIndex[j + 1][i + 1] === 1 && bigIndex[j + 1][i + 2] === 1 &&
+                                        bigIndex[j + 2][i] === 0 && bigIndex[j + 2][i + 1] === 1 && bigIndex[j + 2][i + 2] === 0) {
+                                    blacross++;
+                                }
+                                if (bigIndex[j][i] === 1 && bigIndex[j][i + 1] === 0 && bigIndex[j][i + 2] === 1 &&
+                                        bigIndex[j + 1][i] === 0 && bigIndex[j + 1][i + 1] === 0 && bigIndex[j + 1][i + 2] === 0 &&
+                                        bigIndex[j + 2][i] === 1 && bigIndex[j + 2][i + 1] === 0 && bigIndex[j + 2][i + 2] === 1) {
+                                    whitecross++;
+                                }
+                            }
+                        }
+
+                        for (var i = 0; i <= prop - 3; i++) {
+                            for (var j = 0; j <= prop - 3; j++) {
+                                if (bigIndex[j][i] === 1 && bigIndex[j][i + 1] === 1 && bigIndex[j][i + 2] === 1 &&
+                                        bigIndex[j + 1][i] === 1 && bigIndex[j + 1][i + 1] === 1 && bigIndex[j + 1][i + 2] === 1 &&
+                                        bigIndex[j + 2][i] === 1 && bigIndex[j + 2][i + 1] === 1 && bigIndex[j + 2][i + 2] === 1) {
+                                    blacksquare++;
+                                }
+                                if (bigIndex[j][i] === 0 && bigIndex[j][i + 1] === 0 && bigIndex[j][i + 2] === 0 &&
+                                        bigIndex[j + 1][i] === 0 && bigIndex[j + 1][i + 1] === 0 && bigIndex[j + 1][i + 2] === 0 &&
+                                        bigIndex[j + 2][i] === 0 && bigIndex[j + 2][i + 1] === 0 && bigIndex[j + 2][i + 2] === 0) {
+                                    whitesquare++;
+                                }
+                            }
+                        }
+                        for (var i = 0; i < prop; i++) {
+                            for (var j = 0; j < prop; j++) {
+                                if (i >= j) {
+                                    for (var t = (prop - i - 1); t >= 0; t--) {
+                                        var o = 0;
+                                        var p = 0;
+                                        for (var a = i; a <= (t + i); a++) {
+                                            for (var b = j; b <= (j + t); b++) {
+                                                if (bigIndex[a][b] === 1) {
+                                                    o++;
+                                                }
+                                                if (bigIndex[a][b] === 0) {
+                                                    p++;
+                                                }
+                                            }
+                                        }
+                                        var sq = Math.pow(t + 1, 2);
+                                        if (o === sq && (t + 1) > maxbla) {
+                                            maxbla = t + 1;
+                                        }
+                                        if (p === sq && (t + 1) > maxwhi) {
+                                            maxwhi = t + 1;
+                                        }
+
+                                    }
+                                } else if (i < j) {
+                                    for (var t = prop - j - 1; t >= 0; t--) {
+                                        var o = 0;
+                                        var p = 0;
+                                        for (var a = i; a <= (t + i); a++) {
+                                            for (var b = j; b <= (j + t); b++) {
+                                                if (bigIndex[a][b] === 1) {
+                                                    o++;
+                                                }
+                                                if (bigIndex[a][b] === 0) {
+                                                    p++;
+                                                }
+                                            }
+                                        }
+                                        var sq = Math.pow(t + 1, 2);
+                                        if (o === sq && (t + 1) > maxbla) {
+                                            maxbla = t + 1;
+                                        }
+                                        if (p === sq && (t + 1) > maxwhi) {
+                                            maxwhi = t + 1;
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                        document.getElementById('fig').innerHTML += "<div id='part'>numbers</div>";
+                        document.getElementById('fig').innerHTML += "<ul>";
+                        document.getElementById('fig').innerHTML += "<li>black bits</li>" + (blapie) + "<br>";
+                        document.getElementById('fig').innerHTML += "<li>white bits</li>" + (Math.pow(prop, 2) - blapie) + "<br>";
+                        document.getElementById('fig').innerHTML += "<li>horizontal full black lines</li>" + horlinbla + "<br>";
+                        document.getElementById('fig').innerHTML += "<li>vertical full black lines</li>" + verlinbla + "<br>";
+                        document.getElementById('fig').innerHTML += "<li>horizontal full white lines</li>" + horlinwhi + "<br>";
+                        document.getElementById('fig').innerHTML += "<li>vertical full white lines</li>" + verlinwhi + "<br>";
+                        document.getElementById('fig').innerHTML += "<li>black crosses</li>" + blacross + "<br>";
+                        document.getElementById('fig').innerHTML += "<li>white crosses </li>" + whitecross + "<br>";
+                        document.getElementById('fig').innerHTML += "<li>black 3x3 square</li>" + blacksquare + "<br>";
+                        document.getElementById('fig').innerHTML += "<li>white 3x3 square</li>" + whitesquare + "<br>";
+                        document.getElementById('fig').innerHTML += "<li>biggest black square</li>" + maxbla + "x" + maxbla + "<br>";
+                        document.getElementById('fig').innerHTML += "<li>biggest white square</li>" + maxwhi + "x" + maxwhi + "<br>";
+                        document.getElementById('fig').innerHTML += "</ul>";
+
+                        //extract
+                        document.getElementById('fig').innerHTML += "<div id='part'>extract</div>";
+
+                        for (var i = 0; i < prop; i++) {
+                            for (var j = 0; j < prop; j++) {
+                                document.getElementById("fig").innerHTML += bigIndex[i][j] + " ";
+                            }
+                            document.getElementById("fig").innerHTML += "<br>";
+                        }
+                    }
+
+                    if (col === 1) { //colorful
+                        var colIndex = [];
+                        document.title = "Random colored! :)";
+                        var r = 0;
+                        var g = 0;
+                        var b = 0;
+                        if (document.getElementById("t1").checked) { //no mirror
+                            for (var x = 0; x < width; x = x + zoom) {
+                                var smIndex = [];
+                                for (var y = 0; y < height; y = y + zoom) {
+                                    r = Math.floor(Math.random() * 255);
+                                    g = Math.floor(Math.random() * 255);
+                                    b = Math.floor(Math.random() * 255);
+                                    var o = b | (g << 8) | (r << 16);
+                                    var rgb = '#' + (0x1000000 + o).toString(16).slice(1);
+                                    smIndex[smIndex.length] = rgb;
+                                    for (var a = 0; a < zoom; a++) {
+                                        for (var e = 0; e < zoom; e++) {
+                                            setPixel(imageData, y + a, x + e, r, g, b, 255); // 255 opaque
+                                        }
+                                    }
+
+                                }
+                                c.putImageData(imageData, 0, 0);
+                                colIndex[colIndex.length] = smIndex;
+                            }
+                            document.getElementById('fig').innerHTML += "<div id='part'>extract</div>";
+                            for (var i = 0; i < prop; i++) {
+                                for (var j = 0; j < prop; j++) {
+                                    rgb = colIndex[i][j];
+                                    document.getElementById("fig").innerHTML += "row " + (i + 1) + " col " + (j + 1) + " " + rgb + "<br>";
+                                }
+                            }
+                        } else if (document.getElementById("t2").checked) { //mirror
+                            var partIndex = [];
+                            for (var x = 0; x < prop / 2; x++) {
+                                for (var y = 0; y < prop / 2; y++) {
+                                    r = Math.floor(Math.random() * 255);
+                                    g = Math.floor(Math.random() * 255);
+                                    b = Math.floor(Math.random() * 255);
+                                    partIndex[partIndex.length] = r;
+                                    partIndex[partIndex.length] = g;
+                                    partIndex[partIndex.length] = b;
+                                }
+                            }
+                            for (var d = 0; d < prop / 2; d++) {
+                                for (var u = 0; u < prop / 2; u++) {
+                                    for (var a = 0; a < zoom; a++) {
+                                        for (var e = 0; e < zoom; e++) {
+                                            setPixel(imageData, d * zoom + a, u * zoom + e, partIndex[3 * (d * (prop / 2) + u)], partIndex[3 * (d * (prop / 2) + u) + 1], partIndex[3 * (d * (prop / 2) + u) + 2], 255);
+                                        }
+                                    }
+                                }
+                            }
+                            for (var d = 0; d < prop / 2; d++) {
+                                for (var u = prop - 1; u >= prop / 2; u--) {
+                                    for (var a = 0; a < zoom; a++) {
+                                        for (var e = 0; e < zoom; e++) {
+                                            setPixel(imageData, d * zoom + a, u * zoom + e, partIndex[3 * (d * (prop / 2) + (prop - u - 1))], partIndex[3 * (d * (prop / 2) + (prop - u - 1)) + 1], partIndex[3 * (d * (prop / 2) + (prop - u - 1)) + 2], 255);
+
+                                        }
+                                    }
+                                }
+                            }
+                            for (var d = prop - 1; d >= prop / 2; d--) {
+                                for (var u = 0; u < prop / 2; u++) {
+                                    for (var a = 0; a < zoom; a++) {
+                                        for (var e = 0; e < zoom; e++) {
+                                            setPixel(imageData, d * zoom + a, u * zoom + e, partIndex[3 * ((prop - d - 1) * (prop / 2) + u)], partIndex[3 * ((prop - d - 1) * (prop / 2) + u) + 1], partIndex[3 * ((prop - d - 1) * (prop / 2) + u) + 2], 255);
+                                        }
+                                    }
+                                }
+                            }
+                            for (var d = prop - 1; d >= prop / 2; d--) {
+                                for (var u = prop - 1; u >= prop / 2; u--) {
+                                    for (var a = 0; a < zoom; a++) {
+                                        for (var e = 0; e < zoom; e++) {
+                                            setPixel(imageData, d * zoom + a, u * zoom + e, partIndex[ 3 * ((prop - d - 1) * (prop / 2) + (prop - u - 1))], partIndex[3 * ((prop - d - 1) * (prop / 2) + (prop - u - 1)) + 1], partIndex[3 * ((prop - d - 1) * (prop / 2) + (prop - u - 1)) + 2], 255);
+                                        }
+                                    }
+                                }
+                            }
+                            c.putImageData(imageData, 0, 0);
+
+                            document.getElementById('fig').innerHTML += "<div id='part'>extract</div>";
+                            for (var i = 0; i < prop / 2; i++) {
+                                for (var j = 0; j < prop / 2; j++) {
+                                    r = partIndex[3 * (i * (prop / 2) + j)];
+                                    g = partIndex[3 * (i * (prop / 2) + j) + 1];
+                                    b = partIndex[3 * (i * (prop / 2) + j) + 2];
+                                    var o = b | (g << 8) | (r << 16);
+                                    var rgb = '#' + (0x1000000 + o).toString(16).slice(1);
+                                    document.getElementById("fig").innerHTML += "row " + (i + 1) + " col " + (j + 1) + " " + rgb + "<br>";
+                                }
+                            }
+                        }
+                    }
+                }
 
 
-// copy the image data back onto the canvas
-c.putImageData(imageData, 0, 0); // at coords 0,0
+                function setCharAt(str, index, chr) {
+                    if (index > str.length - 1)
+                        return str;
+                    return str.substr(0, index) + chr + str.substr(index + 1);
+                }
 
-}
-/*
-(function () {
-var textFile = null,
-  makeTextFile = function (text) {
-    var data = new Blob([text], {type: 'text/plain'});
+                function visualize() {
+                    var r = 0;
+                    var g = 0;
+                    var b = 0;
+                    var z = 0;
+                    var p = 0;
+                    if (document.getElementById("s0").checked) {
+                        z = 256;
+                        p = 1;
+                    }
+                    if (document.getElementById("s1").checked) {
+                        z = 128;
+                        p = 2;
+                    }
+                    if (document.getElementById("s2").checked) {
+                        z = 64;
+                        p = 4;
+                    }
+                    if (document.getElementById("s3").checked) {
+                        z = 32;
+                        p = 8;
+                    }
+                    if (document.getElementById("s4").checked) {
+                        z = 16;
+                        p = 16;
+                    }
 
-    // If we are replacing a previously generated file we need to
-    // manually revoke the object URL to avoid memory leaks.
-    if (textFile !== null) {
-      window.URL.revokeObjectURL(textFile);
-    }
+                    var da = document.getElementById("text").value;
+                    //b&w
+                    if (document.getElementById("m1").checked) {
+                        for (var o = 0; o < da.length; o++) {
+                            var i = da.charAt(o).toString();
+                            if (i !== "1" && i !== "0") {
+                                da = setCharAt(da, o, "");
+                                o--;
+                            }
+                        }
+                    }
+                    //colors
+                    if (document.getElementById("m2").checked) {
+                        for (var o = 0; o < da.length; o++) {
+                            var i = da.charAt(o).toString();
+                            if (i !== "0" && i !== "1" && i !== "2" && i !== "3" && i !== "4" && i !== "5" && i !== "6" && i !== "7" && i !== "8" && i !== "9") {
+                                da = setCharAt(da, o, "");
+                                o--;
+                            }
+                        }
+                    }
 
-    textFile = window.URL.createObjectURL(data);
+                    if (da.length < (Math.pow(p, 2))) {
+                        for (var t = da.length; t < Math.pow(p, 2); t++) {
+                            da = da + "0";
+                        }
+                    } else if (da.length > Math.pow(p, 2)) {
+                        da = da.substr(0, Math.pow(p, 2));
+                    }
+                    document.getElementById("text").value = "";
+                    for (var i = 0; i < p; i++) {
+                        for (var j = 0; j < p; j++) {
+                            document.getElementById("text").value += da.charAt(p * i + j);
+                        }
+                        document.getElementById("text").value += "\n";
+                    }
+                    element = document.getElementById("vican");
+                    var c = element.getContext("2d");
+                    width = element.width;
+                    height = element.height;
+                    var imageData = c.createImageData(width, height);
 
-    return textFile;
-  };
+                    if (document.getElementById("m1").checked) { //black and white visualize
+                        for (var x = 0; x < p; x++) {
+                            for (var y = 0; y < p; y++) {
+                                var s = da.charAt(x * p + y);
+                                if (s === '1') {
+                                    r = 0;
+                                    g = 0;
+                                    b = 0;
+                                } else {
+                                    r = 255;
+                                    g = 255;
+                                    b = 255;
+                                }
+                                for (var a = 0; a < z; a++) {
+                                    for (var e = 0; e < z; e++) {
+                                        setPixel(imageData, y * z + a, x * z + e, r, g, b, 255); // 255 opaque
+                                    }
+                                }
+                            }
+                        }
+                    } else if (document.getElementById("m2").checked) { //colorful visualize
+                        for (var x = 0; x < p; x++) {
+                            for (var y = 0; y < p; y++) {
+                                var s = da.charAt(x * p + y);
+                                switch (s) {
+                                    case '0':
+                                        r = 255;
+                                        g = 255;
+                                        b = 255;
+                                        break;//white
+                                    case '1':
+                                        r = 0;
+                                        g = 0;
+                                        b = 0;
+                                        break;//black
+                                    case '2':
+                                        r = 255;
+                                        g = 255;
+                                        b = 0;
+                                        break;//yellow
+                                    case '3':
+                                        r = 255;
+                                        g = 128;
+                                        b = 0;
+                                        break;//orange
+                                    case '4':
+                                        r = 255;
+                                        g = 0;
+                                        b = 0;
+                                        break;//red
+                                    case '5':
+                                        r = 255;
+                                        g = 0;
+                                        b = 127;
+                                        break;//pink
+                                    case '6':
+                                        r = 153;
+                                        g = 76;
+                                        b = 0;
+                                        break;//brown
+                                    case '7':
+                                        r = 0;
+                                        g = 0;
+                                        b = 255;
+                                        break;//blue
+                                    case '8':
+                                        r = 0;
+                                        g = 153;
+                                        b = 0;
+                                        break;//green
+                                    case '9':
+                                        r = 160;
+                                        g = 160;
+                                        b = 160;
+                                        break;//grey
+                                }
+                                for (var a = 0; a < z; a++) {
+                                    for (var e = 0; e < z; e++) {
+                                        setPixel(imageData, y * z + a, x * z + e, r, g, b, 255); // 255 opaque
+                                    }
+                                }
+                            }
+                        }
+                    }
 
+                    c.putImageData(imageData, 0, 0);
+                    document.getElementById("vica").style.display = "block";
+                }
+                function change(one) {
+                    current = one;
+                    if (one == "in") {
+                        document.getElementById("rules").style.display = "block";
+                    }
+                    document.getElementById(one).style.display = "block";
+                    document.getElementById("back").style.display = "block";
+                    document.getElementById("rand").style.display = "none";
+                    document.getElementById("menu").style.display = "none";
+                    document.getElementById("vica").style.display = "none";
+                    document.getElementById("twitter").style.display = "none";
+                }
 
-  var create = document.getElementById('create'),
-    textbox = document.getElementById('textbox');
+                function back() {
+                    document.getElementById("menu").style.display = "block";
+                    document.getElementById("rand").style.display = "block";
+                    document.getElementById(current).style.display = "none";
+                    document.getElementById("vica").style.display = "none";
+                    document.getElementById("back").style.display = "none";
+                    document.getElementById("twitter").style.display = "block";
+                }
 
-  create.addEventListener('click', function () {
-    var link = document.getElementById('downloadlink');
-    link.href = makeTextFile(bigIndex);
-    link.style.display = 'block';
-  }, false);
-})();*/
+                //twitter
+                window.twttr = (function(d, s, id) {
+                    var js, fjs = d.getElementsByTagName(s)[0], t = window.twttr || {};
+                    if (d.getElementById(id))
+                        return;
+                    js = d.createElement(s);
+                    js.id = id;
+                    js.src = "https://platform.twitter.com/widgets.js";
+                    fjs.parentNode.insertBefore(js, fjs);
+                    t._e = [];
+                    t.ready = function(f) {
+                        t._e.push(f);
+                    };
+                    return t;
+                }
+                (document, "script", "twitter-wjs"));
 </script>
-
-
-</body>
-</html>
