@@ -1,0 +1,131 @@
+@charset "utf-8";
+/* CSS Document */
+
+body {
+	font-family: 'Patrick Hand', cursive;
+	margin:0;
+	background-color:rgba(239,252,252,1.00);
+	color:#292929;
+    font-size: x-large;
+}
+.header {
+	width:100%;
+	background-color:rgba(90,221,223,1.00);
+	background-image: url("h.png");
+	background-repeat: no-repeat;
+	background-size:cover;
+	background-position: center;
+	height:230px;
+	font-size:xx-large;
+	text-align:center;
+	vertical-align:middle;
+}
+
+.head {
+	padding:60px 0 0 0 ;
+}
+.contr {
+    background-color:rgba(90,221,223,0.2);
+}
+.contl {
+    background-color:rgba(90,221,223,0.4);
+}
+
+@media screen and (min-width: 820px) {
+    .content{
+        width: 800px;
+        margin:auto;
+        display: table;
+    }
+    .text {
+        display: table-cell;
+        text-align:justify;
+        margin:2%;
+        vertical-align:middle;
+    }
+    .imag {
+        vertical-align:middle;
+        display: table-cell;
+        text-align: center;
+        margin:auto;
+
+    }
+    .contr .imag {
+        width:30%;
+    }
+    .contl .imag {
+        width:30%;
+    }
+    .contr .text {
+        width:66%;
+    }
+    .contl .text {
+        width:66%;
+    }
+    .imga {
+        max-height:40%;
+        max-width:80%;
+    }
+}
+
+@media screen and (max-width: 820px) {
+    .content {
+        width: 100%;
+        overflow: auto;
+    }
+    .text {
+        text-align:justify;
+        padding:20px;
+    }
+    .imag{
+        text-align:center;
+        margin:10px;
+    }
+    .imga {
+        max-height:20%;
+        max-width:30%;
+    }
+}
+
+.text h2, .me h2 {
+    text-align:center;
+    padding:5px;
+    margin:0;
+}
+.me {
+    padding:0;
+    margin:0;
+    background-color:rgba(90,221,223,1);
+    overflow: auto; 
+    padding:20px;
+    text-align:center;
+}
+.circlepic {
+	width: 200px;
+	height: 200px;
+	border-radius: 100px;
+	-webkit-border-radius: 150px;
+	-moz-border-radius: 150px;
+	background: url(leahhead.jpg) no-repeat;
+    background-size: 100%;
+    margin:auto;
+}
+.links {
+    width: 80px;
+}
+h1,h5 {
+	padding:0;
+	margin:0;
+}
+h2 {
+	padding:5px;
+	margin:0;
+}
+p{
+    margin:10px;
+}
+a {
+    text-decoration:none;
+    color:#292929;
+}
+	
