@@ -1,139 +1,159 @@
 body {
-	font-family: "Courier New";
+    font-family: "Courier New";
 }
 #p {
-	font-size:280%;
-	padding:10px;
-	font-weight:bold;
-	margin:5px;
+    font-size:280%;
+    padding:10px;
+    font-weight:bold;
+    margin:5px;
+}
+#pi {
+    margin:25px;
+}
+#tab {
+    text-align: center;
+    font-weight:bold;
+    font-size:large;
+    width:100%;
+}
+td {
+    padding: 0px;
+    height: 40px;
 }
 #wrapper, #menu,#rand {
-	width:90%;
-	background-color:#FFFFFF;
-	margin-right:auto;
-	margin-left:auto;
-	text-align:center;
-	margin-top:5px;
-	margin-bottom:5px;
-	font-size:x-large;
-	font-weight:bold;
-	padding:5px;
+    width:90%;
+    background-color:#FFFFFF;
+    margin-right:auto;
+    margin-left:auto;
+    text-align:center;
+    margin-top:5px;
+    margin-bottom:5px;
+    font-size:x-large;
+    font-weight:bold;
+    padding:5px;
 }
 #in,#back, #out, #set, #info {
-	width:90%;
-	background-color:#FFFFFF;
-	margin-right:auto;
-	margin-left:auto;
-	text-align:center;
-	margin-top:5px;
-	margin-bottom:5px;
-	font-size:x-large;
-	font-weight:bold;
-	padding:5px;
-	display:none;
+    width:90%;
+    background-color:#FFFFFF;
+    margin-right:auto;
+    margin-left:auto;
+    text-align:center;
+    margin-top:5px;
+    margin-bottom:5px;
+    font-size:x-large;
+    font-weight:bold;
+    padding:5px;
+    display:none;
 }
 #rules {
-        width:90%;
-	background-color:#FFFFFF;
-	margin-right:auto;
-	margin-left:auto;
-	text-align:center;
-	margin-top:5px;
-	margin-bottom:5px;
-	font-size:large;
-	font-weight:bold;
-	padding:5px;
-	display:none;
+    width:90%;
+    background-color:#FFFFFF;
+    margin-right:auto;
+    margin-left:auto;
+    text-align:center;
+    margin-top:5px;
+    margin-bottom:5px;
+    font-size:large;
+    font-weight:bold;
+    padding:5px;
+    display:none;
 }
 #fig{
-        width:90%;
-	background-color:#FFFFFF;
-	margin-right:auto;
-	margin-left:auto;
-	text-align:center;
-	margin-top:5px;
-	margin-bottom:5px;
-	font-size:small;
-	font-weight:bold;
-	padding:5px;
-	display:none;
+    width:90%;
+    background-color:#FFFFFF;
+    margin-right:auto;
+    margin-left:auto;
+    text-align:center;
+    margin-top:5px;
+    margin-bottom:5px;
+    font-size:small;
+    font-weight:bold;
+    padding:5px;
+    display:none;
 }
 #vica {
-	width:90%;
-	background-color:#FFFFFF;
-	margin-right:auto;
-	margin-left:auto;
-	text-align:center;
-	margin-top:5px;
-	margin-bottom:5px;
-	font-size:x-large;
-	font-weight:bold;
-	padding:5px;
-	display:none;
+    width:90%;
+    background-color:#FFFFFF;
+    margin-right:auto;
+    margin-left:auto;
+    text-align:center;
+    margin-top:5px;
+    margin-bottom:5px;
+    font-size:x-large;
+    font-weight:bold;
+    padding:5px;
+    display:none;
 }
 #downloadin, #downloadra {
-	width:90%;
-	background-color:#FFFFFF;
-	margin-right:auto;
-	margin-left:auto;
-	text-align:center;
-	margin-top:5px;
-	margin-bottom:5px;
-	font-size:x-large;
-	font-weight:bold;
-	padding:5px;
+    width:90%;
+    background-color:#FFFFFF;
+    margin-right:auto;
+    margin-left:auto;
+    text-align:center;
+    margin-top:5px;
+    margin-bottom:5px;
+    font-size:x-large;
+    font-weight:bold;
+    padding:5px;
 }
 #canvas {
-	padding:10px;
+    padding:10px;
 }
 textarea {
-	width:100%;
-	outline: none;
-	resize: none;
-	border: none;
-	font-size:x-large;
-	font-family: "Courier New";
-	font-weight:bold;
-	text-align:center;
+    outline: none;
+    resize: none;
+    border: none;
+    font-size:x-large;
+    font-family: "Courier New";
+    font-weight:bold;
+    text-align:center;
+    overflow:hidden;
+    overflow-x: hidden;
 }
 #b {
-	background-color:#ffffff;
-	cursor:pointer;
-	color:#000000;
-	font-family:Courier New;
-	font-size:x-large;
-	font-weight:bold;
-	text-decoration:none;
-	border: none;
-	outline:none;
+    background-color:#ffffff;
+    cursor:pointer;
+    color:#000000;
+    font-family:Courier New;
+    font-size:x-large;
+    font-weight:bold;
+    text-decoration:none;
+    border: none;
+    outline:none;
+}
+#b:hover {
+    color:#808080;
 }
 #create {
-	background-color:#ffffff;
-	cursor:pointer;
-	color:#000000;
-	font-family:Courier New;
-	font-size:xx-large;
-	font-weight:bold;
-	text-decoration:none;
-	border: none;
-	outline:none;
+    background-color:#ffffff;
+    cursor:pointer;
+    color:#000000;
+    font-family:Courier New;
+    font-size:xx-large;
+    font-weight:bold;
+    text-decoration:none;
+    border: none;
+    outline:none;
 }
 a{
-	text-decoration: none;
-	color: black;
+    text-decoration: none;
+    color: black;
 }
 #part {
-	width:90%;
-	background-color:#FFFFFF;
-	margin-right:auto;
-	margin-left:auto;
-	text-align:center;
-	margin-top:5px;
-	margin-bottom:5px;
-	font-size:xx-large;
-	font-weight:bold;
-	padding:5px;	
+    width:90%;
+    background-color:#FFFFFF;
+    margin-right:auto;
+    margin-left:auto;
+    text-align:center;
+    margin-top:5px;
+    margin-bottom:5px;
+    font-size:x-large;
+    font-weight:bold;
+    padding:5px;	
 }
 label {
-	margin-left:10px;
+    margin-left:10px;
+    font-size:large;
+    font-weight:bold;
+    
 }
