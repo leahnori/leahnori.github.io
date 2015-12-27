@@ -1,0 +1,67 @@
+<html>
+
+    <head>
+        <title>progrobi</title>
+        <link rel="shortcut icon" href="pr/pr.ico" type="image/x-icon">
+        <link rel="icon" href="pr/pr.ico" type="image/x-icon">
+    </head>
+    
+    <style>
+        body {
+            font-family: "Trebuchet MS", Helvetica, sans-serif ;
+            padding:0;
+            margin:0;
+        }
+        .h {
+                font-size:500%;    
+        }
+        @media screen and (min-width: 912px) { 
+            body {
+                background-image: url("pr/prback.png");
+                background-repeat: no-repeat;
+                background-attachment: fixed;
+                background-position: left top;
+                background-size: cover;
+            }
+            .main {
+                width:calc(100% - 400px);
+                margin-left: auto;
+                margin-right:10px;
+                background-color: rgba(255,255,255,0.8);
+            }
+            
+            .header {
+                text-align: right;
+                padding:20px;
+            }
+            span {
+               margin:10px;
+            }
+        }
+        @media screen and (max-width: 911px) { 
+            body {
+                background-color: rgb(200,250,240);
+            }
+            .main {
+                width:100%;
+                /*background-color: rgba(255,255,255,0.95);*/
+            }
+            .header {
+                text-align: center;
+                padding:20px;
+            }
+            span {
+               margin:10px;
+                display: block;
+            }
+        }
+    </style>
+    
+    <body>
+        <div class="main">
+            <div class="header"><span class="h">progRobi</span><span><img src="pr/download.png" width=100px></span></div>
+            <div>text</div>
+        </div>
+    </body>
+
+</html>
